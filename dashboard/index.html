@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Launch Radar — pre-token protocols priced by their trading peers</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="masthead-in">
+    <div>
+      <h1><span class="blip"></span>LAUNCH&nbsp;RADAR</h1>
+      <p class="tagline">Protocols whose token does not exist yet, ranked by what it would be worth — priced off the multiples their already-trading peers actually fetch.</p>
+    </div>
+    <div class="mast-meta">
+      <div><span class="k">Snapshot</span><span class="v" id="m-asof">—</span></div>
+      <div><span class="k">Model</span><span class="v" id="m-model">—</span></div>
+      <div><span class="k">Watchlist floor</span><span class="v" id="m-floor">—</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="stats" id="stats"></section>
+
+<section class="model-band">
+  <div class="model-formula">
+    <span class="mf-label">Implied value</span>
+    <code>TVL × peer multiple × growth factor × maturity factor</code>
+  </div>
+  <p class="model-note">The peer multiple is the market-cap / TVL multiple of protocols whose token already trades, taken per category and per chain and shrunk toward the market-wide median when a group has few peers. Growth reads the protocol's 7-day TVL change; maturity reads how long it has run with no token. No protocol is priced by name — the same arithmetic prices every row.</p>
+  <div class="peer-line" id="peer-line"></div>
+</section>
+
+<section class="controls">
+  <label class="ctl grow">Search
+    <input id="f-q" type="search" placeholder="Protocol name or slug…">
+  </label>
+  <label class="ctl">Category
+    <select id="f-cat"><option value="">All categories</option></select>
+  </label>
+  <label class="ctl">Chain
+    <select id="f-chain"><option value="">All chains</option></select>
+  </label>
+  <label class="ctl check">
+    <input id="f-watch" type="checkbox"> Watchlist only <span class="diamond">◆</span>
+  </label>
+  <span class="count" id="count"></span>
+</section>
+
+<main class="board-wrap">
+  <table class="board">
+    <thead>
+      <tr>
+        <th data-sort="rank" class="num sortable">Rank</th>
+        <th data-sort="name" class="sortable">Protocol</th>
+        <th data-sort="category" class="sortable">Category</th>
+        <th>Chains</th>
+        <th data-sort="tvl_usd" class="num sortable">TVL</th>
+        <th data-sort="change_7d" class="num sortable">7d %</th>
+        <th data-sort="age_days" class="num sortable">Age</th>
+        <th data-sort="peer" class="num sortable">Peer ×</th>
+        <th data-sort="implied_value_usd" class="num sortable sorted">Implied value</th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <p class="empty" id="empty" hidden>No protocol matches those filters. Loosen one and the radar sweeps again.</p>
+</main>
+
+<section class="trading-band">
+  <h2>Already trading — set apart, never ranked</h2>
+  <p class="tb-note">These protocols record a token, so the radar does not price them; it learns from them. Their market-cap / TVL multiples are the peer evidence behind every implied value above.</p>
+  <div class="chips" id="trading"></div>
+</section>
+
+<footer>
+  <p id="source-line">—</p>
+  <p>Implied value is this radar's own claim about a hypothetical launch, not a prediction that a token will be issued. Farm plans are starting points, not financial advice.</p>
+</footer>
+
+<aside class="drawer" id="drawer" hidden>
+  <button class="drawer-x" id="drawer-x" aria-label="Close detail">×</button>
+  <div id="drawer-body"></div>
+</aside>
+<div class="scrim" id="scrim" hidden></div>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
